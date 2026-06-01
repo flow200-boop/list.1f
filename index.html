@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Todo App</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✓</text></svg>">
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="app">
+    <header class="app-header">
+      <div class="header-content">
+        <h1>Todo</h1>
+        <p class="header-subtitle">Stay organized, get things done</p>
+      </div>
+    </header>
+
+    <main class="main-content">
+      <div class="todo-card">
+        <!-- Add Todo Form -->
+        <form class="todo-form" id="todo-form">
+          <div class="input-wrapper">
+            <span class="input-icon">+</span>
+            <input
+              type="text"
+              id="todo-input"
+              class="todo-input"
+              placeholder="What needs to be done?"
+              autocomplete="off"
+              autofocus
+            />
+          </div>
+          <button type="submit" class="add-btn" id="add-btn">
+            Add
+          </button>
+        </form>
+
+        <!-- Filters -->
+        <div class="filters" id="filters">
+          <button class="filter-btn active" data-filter="all">All</button>
+          <button class="filter-btn" data-filter="active">Active</button>
+          <button class="filter-btn" data-filter="completed">Completed</button>
+        </div>
+
+        <!-- Todo List -->
+        <div class="todo-list" id="todo-list">
+          <!-- Todos rendered here -->
+        </div>
+
+        <!-- Footer -->
+        <div class="todo-footer" id="todo-footer">
+          <span class="items-count" id="items-count">0 items left</span>
+          <button class="clear-btn" id="clear-btn">Clear completed</button>
+        </div>
+
+        <!-- Empty State -->
+        <div class="empty-state" id="empty-state">
+          <div class="empty-icon">📝</div>
+          <p class="empty-text">No todos yet</p>
+          <p class="empty-hint">Add one above to get started!</p>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
