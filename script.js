@@ -38,6 +38,18 @@ function getFilteredTodos() {
   return todos;
 }
 
+function formatDate(ts) {
+  if (!ts) return "";
+  const d = new Date(ts);
+  return d.toLocaleString("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+    hour: "numeric",
+    minute: "2-digit",
+  });
+}
+
 function getActiveCount() {
   return todos.filter((t) => !t.completed).length;
 }
@@ -85,11 +97,17 @@ function render() {
         <input type="checkbox" class="todo-checkbox" id="check-${todo.id}" ${todo.completed ? "checked" : ""} />
         <label class="checkbox-label" for="check-${todo.id}"></label>
       </div>
-      ${
-        editingId === todo.id
-          ? `<input type="text" class="todo-edit-input" value="${escapeHtml(todo.text)}" data-edit-id="${todo.id}" autofocus />`
-          : `<span class="todo-text">${escapeHtml(todo.text)}</span>`
-      }
+      <div class="todo-content">
+        ${
+          editingId === todo.id
+            ? `<input type="text" class="todo-edit-input" value="${escapeHtml(todo.text)}" data-edit-id="${todo.id}" autofocus />`
+            : `<span class="todo-text">${escapeHtml(todo.text)}</span>`
+        }
+        <div class="todo-meta">
+          <span class="meta-created">Created ${formatDate(todo.createdAt)}</span>
+          ${todo.completed && todo.completedAt ? `<span class="meta-completed">Completed ${formatDate(todo.completedAt)}</span>` : ""}
+        </div>
+      </div>
       <button class="delete-btn" data-delete-id="${todo.id}" title="Delete todo">×</button>
     </li>
   `
@@ -121,6 +139,7 @@ function addTodo(text) {
     text: trimmed,
     completed: false,
     createdAt: Date.now(),
+    completedAt: null,
   };
 
   todos.unshift(todo);
@@ -133,6 +152,7 @@ function toggleTodo(id) {
   const todo = todos.find((t) => t.id === id);
   if (todo) {
     todo.completed = !todo.completed;
+    todo.completedAt = todo.completed ? Date.now() : null;
     saveTodos();
     render();
   }
